@@ -1,56 +1,80 @@
 function getComputerChoice() {
     if (Math.random() > 0.66) {
-        return ("rock");
+        return ("камень");
     } else if (Math.random() > 0.33) {
-        return "paper";
+        return "бумага";
     } else {
-        return "scissors";
+        return "ножницы";
     }
 }
 
 function getHumanChoice() {
-    let answer = prompt("Choose rock, paper or scissors", "").toLowerCase();
-    if (answer === "rock" || answer === "paper" || answer === "scissors") {
+    let answer = prompt("Набери камень, бумага или ножницы", "").toLowerCase();
+    if (answer === "камень" || answer === "бумага" || answer === "ножницы") {
         return answer;
     } else {
-        return "Please choose rock, paper or scissors";
+        return "Набери правильно камень, бумага or ножницы";
     }
 }
 
-let humanScore = 0;
-let computerScore = 0;
+function playGame() {
 
-function playRound(humanChoice, computerChoice) {
-    if (humanChoice === "rock") {
-        if (computerChoice === "paper") {
-            console.log("You lose! Paper beats Rock")
-        } else if (computerChoice === "scissors") {
-            console.log("You won! Rock beats scissors")
+    let humanScore = 0;
+    let computerScore = 0;
+    let result = () => {
+        if (humanScore > computerScore) {
+            console.log("Человек победил машину");
+        } else if (humanScore < computerScore) {
+            console.log("Машина победила человека");
         } else {
-            console.log("Play another round")
+            console.log("Ничья");
         }
-    } else if (humanChoice === "paper") {
-        if (computerChoice === "rock") {
-            console.log("You won! Rock beats paper")
-        } else if (computerChoice === "scissors") {
-            console.log("You lost! Scissors beats paper")
-        } else {
-            console.log("Play another round")
-        }
-    } else if (humanChoice === "scissors") {
-        if (computerChoice === "rock") {
-            console.log("You lost! Rock beats scissors")
-        } else if (computerChoice === "paper") {
-            console.log("You won! Scissors beats paper");
-        } else {
-            console.log("Play another round");
-        }
-    } else {
-        console.log("Make your choice again");
     }
+
+    function playRound(humanChoice, computerChoice) {
+        if (humanChoice === "камень") {
+            if (computerChoice === "бумага") {
+                computerScore++;
+                console.log("Ты проиграл! бумага бьёт камень")
+            } else if (computerChoice === "ножницы") {
+                humanScore++;
+                console.log("Ты выиграл! камень бьёт ножницы")
+            } else {
+                console.log("Ничья")
+            }
+        } else if (humanChoice === "бумага") {
+            if (computerChoice === "камень") {
+                humanScore++;
+                console.log("Ты выиграл! камень бьёт бумагу")
+            } else if (computerChoice === "ножницы") {
+                computerScore++;
+                console.log("Ты проиграл! ножницы бьют бумагу")
+            } else {
+                console.log("Play another round")
+            }
+        } else if (humanChoice === "ножницы") {
+            if (computerChoice === "камень") {
+                computerScore++;
+                console.log("You lost! камень beats ножницы")
+            } else if (computerChoice === "бумага") {
+                humanScore++;
+                console.log("You won! ножницы beats бумага");
+            } else {
+                console.log("Ничья");
+            }
+        } else {
+            console.log("Набери ещё раз");
+        }
+    }
+
+    for (let i = 0; i < 5; i++) {
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+        playRound(humanSelection, computerSelection);
+        console.log(`Current Score - You: ${humanScore}, Computer: ${computerScore}`);
+    }
+    console.log(result());
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
+playGame();
